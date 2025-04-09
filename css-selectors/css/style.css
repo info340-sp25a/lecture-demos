@@ -6,6 +6,32 @@ header {
   margin-bottom: 1em;
 }
 
+body {
+  font-size: 18px;
+}
+
+header {
+  font-size: 20px;
+}
+
+header p {
+  font-size: 2rem;
+}
+
+header p em {
+  font-size: 2rem;
+}
+
+
+h1, h2 {
+  font-family: 'Papyrus';
+}
+
+/* h2 {
+  font-family: 'Papyrus';
+} */
+
+
 h2 {
   color: rebeccapurple;
 }
@@ -14,10 +40,18 @@ p {
   font-size: 18px;
 }
 
+header p {
+  /* background-color: yellow; */
+}
+
 img {
   max-height: 150px;
   border-radius: 20px;
   background-color: white;
+}
+
+a:hover {
+  font-size: 3em;
 }
 
 /* elements with class="about-section" */
