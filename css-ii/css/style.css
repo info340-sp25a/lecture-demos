@@ -1,6 +1,15 @@
 /* general styling */
 h1, h2, h3 {
   font-family: 'Helvetica';
+  margin: 0;
+}
+
+h1 {
+  /* padding: 1em; */
+  /* padding-bottom: 2em; */
+  /* border: 3px solid blue; */
+  /* margin: 1em; */
+
 }
 
 h2 {
@@ -12,16 +21,39 @@ h2 {
 nav {
   color: white;
   background-color: #4b2e83;
+  padding: 10px;
 }
 
 nav a {
   color: white;
 }
 
+nav ul {
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav li {
+  list-style-type: none;
+  /* display: none; */
+  /* border: 1px solid white; */
+  padding: 1em;
+  /* margin: 1em; */
+}
+
+main {
+  display: flex;
+}
 
 /* about section */
 .about-section {
   background-color: #f8f8f8;
+  margin: 1em;
+  flex-basis: 250px;
+  margin-right: 2em;
+  padding: .5em;
+  order: 2;
 }
 
 .about-section img {
@@ -30,8 +62,20 @@ nav a {
 
 
 /* topics cards */
+.card-deck {
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: space-around; */
+}
+
 .topics-section .card {
   border: 1px solid black;
+  width: 300px;
+  flex-grow: 1;
+}
+
+.topics-section .card.firebase-card {
+  flex-grow: 5;
 }
 
 .topics-section img {
