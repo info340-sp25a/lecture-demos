@@ -1,5 +1,9 @@
 /* empty! (mostly) */
 
+h1 {
+  background-color: rebeccapurple;
+}
+
 /* keep images small enough to work with */
 .about-section img {
   max-width: 150px;

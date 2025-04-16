@@ -35,13 +35,13 @@ nav a {
 
 /* main content (columns) */
 main {
-  display: flex;
+  /* display: flex; */
 }
 
 /* about section */
 .about-section {
   background-color: #f8f8f8;
-  margin-left: 1.5em;
+  /* margin-left: 1.5em; */
   flex-basis: 30%;
   order: 2;
 }
@@ -53,21 +53,71 @@ main {
 
 /* topics cards */
 .card-box {
-  display: flex;
+  /* display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-between; */
 }
 
 .topics-section .card {
   border: 1px solid black;
   flex-grow: 1;
+  text-align: center;
 }
 
 .topics-section img {
   max-width: 150px;
+  display: none;
 }
 
 /* other */
 footer {
   font-size: smaller;
+}
+
+@media (min-width: 576px) {
+
+  body {
+    background-color: lightpink;
+  }
+
+  .card {
+    background-color: white;
+  }
+}
+
+@media (min-width: 768px) {
+  body {
+    background-color: goldenrod;
+  }
+
+  .card-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .card {
+    flex-basis: 50%; /*flexbox version of "width" */
+  }
+
+  .topics-section img {
+    display: inline;
+  }
+
+}
+
+@media (min-width: 1200px) {
+  body {
+    background-color: lightskyblue
+  }
+
+  .card-box {
+    justify-content: space-around;
+  }
+
+  .topics-section  .card {
+    flex-basis: 30%;
+    flex-grow: 0;
+  }
+
 }
