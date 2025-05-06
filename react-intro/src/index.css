@@ -3,3 +3,8 @@ header {
   background-color: rebeccapurple;
   padding: .5em;
 }
+
+.rounded {
+  max-width: 150px;
+  border-radius: 50%;
+}
