@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { ComposeForm } from './ComposeForm.jsx';
 
 import INITIAL_CHAT_LOG from '../data/chat_log.json';
+import USERS from '../data/users.json';  
 
 export function ChatPane(props) {
   console.log("rendering chatpane")
   const { currentChannel } = props;
 
-  //data: an array of message objects [{}, {}]
-  const messageObjArray = INITIAL_CHAT_LOG
+  const [msgObjArray, setMsgObjArray] = useState( INITIAL_CHAT_LOG )  
+  //DEBUG STATE VARIABLES
+  // const messageObjArray = stateResultArray[0];
+  // const setMessageObjArray = stateResultArray[1];
+
+  // //data: an array of message objects [{}, {}]
+  // const messageObjArray = INITIAL_CHAT_LOG
+
+  const handleClick = (event) => {
+    console.log("You clicked me!");
+    addMessage(USERS[1], "Hello react", "general")
+  }
 
   // DATA MANAGEMENT: how do we change
   const addMessage = (userObj, messageText, channel) => {
@@ -21,8 +32,13 @@ export function ChatPane(props) {
       "timestamp": Date.now(),
       "channel": channel
     }
-    console.log(newMessage);
-    messageObjArray.push(newMessage)
+    //console.log(newMessage);
+    const biggerArray = [...msgObjArray, newMessage];
+    // messageObjArray.push(newMessage)
+
+    setMsgObjArray(biggerArray); //1. write on the board
+                                    //2. rerender component
+    console.log(msgObjArray);
   }
 
   /* RENDERING: what do we look like */
@@ -30,7 +46,7 @@ export function ChatPane(props) {
   //Step 1. data processing
   //data: an array of message objects [{}, {}]
   //sorted and filtered
-  const channelMessages = messageObjArray
+  const channelMessages = msgObjArray
     .sort((m1, m2) => m2.timestamp - m1.timestamp) //reverse chron order
     .filter((msgObj) => { //channel messages only
       return msgObj.channel === currentChannel; //whether to keep
@@ -48,7 +64,8 @@ export function ChatPane(props) {
       <div className="scrollable-pane pt-2 my-2">
         {/* button demo */}
         <div className="mb-2">
-          <button className="btn btn-success">Add a message!</button>
+          {/* button.addEventListener('click', function()) */}
+          <button className="btn btn-success" onClick={handleClick}>Add a message!</button>
         </div>
         <hr/>
 
@@ -61,7 +78,7 @@ export function ChatPane(props) {
         {messageItemArray}
       </div>
 
-      <ComposeForm currentChannel={currentChannel} />
+      <ComposeForm currentChannel={currentChannel} addMessageFunc={addMessage} />
       </>
   )
 }
