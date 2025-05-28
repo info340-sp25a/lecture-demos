@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 
 import { Routes, Route, Outlet, Navigate, useNavigate } from 'react-router';
 
+import { getDatabase, ref, set as firebaseSet, push as firebasePush, onValue } from 'firebase/database'
+
 import { HeaderBar } from './HeaderBar.jsx';
 
 import ChatPage from './ChatPage.jsx';
@@ -12,7 +14,7 @@ import INITIAL_CHAT_LOG from '../data/chat_log.json'
 import DEFAULT_USERS from '../data/users.json';
 
 function App(props) {
-  const [messageStateArray, setMessageStateArray] = useState(INITIAL_CHAT_LOG);
+  const [messageStateArray, setMessageStateArray] = useState([]);
   const [currentUser, setCurrentUser] = useState(DEFAULT_USERS[0]) //initialize;
 
   const navigateTo = useNavigate(); //navigation hook
@@ -23,6 +25,29 @@ function App(props) {
     changeUser(DEFAULT_USERS[1])
 
   }, []) //array is list of variables that will cause this to rerun if changed
+
+  useEffect(() => {
+    console.log("component loaded once")
+    //listen to the database
+    const db = getDatabase();
+    const allMessageRef = ref(db, "allMessages");
+
+    //addEventListener("value", ()=>{})
+    onValue(allMessageRef, (snapshot) => {
+      const valueObj = snapshot.val();
+      console.log(valueObj);
+      
+      const keyArray = Object.keys(valueObj);
+      const msgObjArray = keyArray.map((keyString) => {
+        const transformed = valueObj[keyString]
+        return transformed;
+      })
+      setMessageStateArray(msgObjArray);
+    });
+
+  }, [])
+
+
 
   const changeUser = (userObj) => {
     console.log("changing user to", userObj.userName);
@@ -41,8 +66,16 @@ function App(props) {
       "timestamp": Date.now(),
       "channel": channel
     }
-    const newMessageArray = [...messageStateArray, newMessageObj];
-    setMessageStateArray(newMessageArray); //update state & rerender
+
+    //Add message to the database
+    const db = getDatabase();
+    const allMessageRef = ref(db, "allMessages")
+    firebasePush(allMessageRef, newMessageObj);
+
+
+
+    // const newMessageArray = [...messageStateArray, newMessageObj];
+    // setMessageStateArray(newMessageArray); //update state & rerender
   }
 
   return (
