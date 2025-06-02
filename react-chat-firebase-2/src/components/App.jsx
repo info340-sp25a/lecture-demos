@@ -3,6 +3,8 @@ import React, {useEffect, useState} from 'react';
 import { Routes, Route, Outlet, Navigate, useNavigate } from 'react-router';
 import { getDatabase, ref, push as firebasePush, onValue } from 'firebase/database'
 
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
 import { HeaderBar } from './HeaderBar.jsx';
 import ChatPage from './ChatPage.jsx';
 import SignInPage from './SignInPage.jsx';
@@ -21,8 +23,31 @@ function App(props) {
   //effect to run when the component first loads
   useEffect(() => {
     //log in a default user
-    changeUser(DEFAULT_USERS[1])
+    // changeUser(DEFAULT_USERS[1])
   }, []) //array is list of variables that will cause this to rerun if changed
+
+
+ useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      console.log("user has changed!", firebaseUser);
+
+      if(firebaseUser) {
+        firebaseUser.userId = firebaseUser.uid; //rename the uid key
+        firebaseUser.userName = firebaseUser.displayName || "Null";
+        firebaseUser.userImg = firebaseUser.photoURL || "/img/null.png";
+      }
+
+
+      setCurrentUser(firebaseUser);
+      // setUser(firebaseUser);
+      // setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+    
+
 
   //effect to run when the component first loads
   useEffect(() => {

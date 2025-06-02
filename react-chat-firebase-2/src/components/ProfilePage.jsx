@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 
+import { getApp } from 'firebase/app';
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { updateProfile } from 'firebase/auth';
+
 export default function ProfilePage(props) {
   const { currentUser } = props;
   //convenience
@@ -17,8 +21,20 @@ export default function ProfilePage(props) {
     }
   }
 
-  const handleImageUpload = (event) => {
+  const handleImageUpload = async (event) => {
     console.log("Uploading", imageFile);
+
+    const storage = getStorage(getApp(), "gs://info340-media.firebasestorage.app");
+    const imageRef = storageRef(storage, "lecture-demo/userImages/"+currentUser.userId+".png")
+    
+    await uploadBytes(imageRef, imageFile);
+
+    const downloadUrl = await getDownloadURL(imageRef);
+    console.log(downloadUrl);
+
+    //put that location in the user profile
+    updateProfile(currentUser, {photoURL: downloadUrl})
+
   }
 
   return (

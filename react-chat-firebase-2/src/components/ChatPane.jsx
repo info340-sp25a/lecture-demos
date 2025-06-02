@@ -10,8 +10,6 @@ export function ChatPane(props) {
   //from url parameters
   const paramsObj = useParams();
   const currentChannel = paramsObj.channelName || "general" //default
-  console.log(currentChannel)
-  console.log(messageArray);
 
   /** RENDERING: what do we look like **/
 

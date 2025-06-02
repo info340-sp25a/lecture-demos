@@ -4,6 +4,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 import DEFAULT_USERS from '../data/users.json';
 
+import AuthForm from './LoginForm.jsx';
 
 export default function SignInPage(props) {
 
@@ -35,7 +36,9 @@ export default function SignInPage(props) {
     <div className="card bg-light">
       <div className="container card-body">
 
-        <p className="lead">Pick a user:</p>
+        <AuthForm />
+
+        {/* <p className="lead">Pick a user:</p>
         <Dropdown>
           <Dropdown.Toggle variant="light">
             <img src={currentUser.userImg} alt={currentUser.userName + " avatar"} />
@@ -43,7 +46,7 @@ export default function SignInPage(props) {
           <Dropdown.Menu>
             {userButtons}
           </Dropdown.Menu>
-        </Dropdown>
+        </Dropdown> */}
       </div>
     </div>
   )
